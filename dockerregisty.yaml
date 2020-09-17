@@ -50,3 +50,4 @@
       ports:
         - "5000:5000"
       restart: yes
+      restart_policy: unless-stopped
