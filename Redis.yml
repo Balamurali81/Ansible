@@ -1,0 +1,22 @@
+---
+- hosts: node9
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: install Epel release and the latest version of Redis
+    yum:
+      name: 
+        - epel-release
+      state: latest
+
+  - name: install Epel release and the latest version of Redis
+    yum:
+      name: 
+        - redis
+      state: latest
+
+  - name: enable service redis and ensure it is enabled when started
+    systemd:
+      name: redis
+      enabled: yes
+      state: started
