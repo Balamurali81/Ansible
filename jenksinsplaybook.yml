@@ -1,0 +1,26 @@
+---
+- hosts : jenkins2
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: Add jenkins longterm repo
+    get_url:
+      url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+      dest: /etc/yum.repos.d/jenkins.repo
+  - name: Import jenkins key from a url
+    rpm_key:
+      state: present
+      key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+  - name: install the latest version of jenkins
+    yum:
+      name: "{{app_name}}"
+      state: latest
+    tags:
+      - install
+
+  - name: start the jenkins service
+    systemd:
+      name: jenkins
+      state : started
+      enabled: yes
